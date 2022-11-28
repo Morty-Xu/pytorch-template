@@ -37,7 +37,13 @@ def main(config):
     model.load_state_dict(state_dict)
 
     # prepare model for testing
-    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    if torch.cuda.is_available():
+        device = torch.device('cuda')
+    elif torch.cuda.is_available():
+        device = torch.device('mps')
+    else:
+        device = torch.device('cpu')
+
     model = model.to(device)
     model.eval()
 
